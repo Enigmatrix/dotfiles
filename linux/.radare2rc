@@ -1,0 +1,13 @@
+#stack
+e cmd.stack = true
+
+# Solarized theme
+eco solarized
+
+# Use UTF-8 to show cool arrows that do not look like crap :)
+e scr.utf8 = true 
+
+# have lines coming out from current block too
+e asm.linesout = true
+
+e asm.varsub_only = true
