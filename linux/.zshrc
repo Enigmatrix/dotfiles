@@ -7,10 +7,11 @@ export ZSH="/home/enigmatrix/.oh-my-zsh"
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="agnoster"
+ZSH_THEME="powerlevel9k/powerlevel9k"
 
 alias -g '~shared'='/media/sf_vboxshared'
-hash -d shared='/media/sf_vboxshared'
+shared='/media/sf_vboxshared'
+hash -d shared=/media/sf_vboxshared
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -105,9 +106,38 @@ alias conf-vim="vim ~/.SpaceVim/vimrc"
 alias conf-r2="vim ~/.radare2rc"
 alias clear="reset"
 #
-prompt_context() {
-  prompt_segment black default "%(!.%{%F{yellow}%}.)hackbox"
-}
+#prompt_context() {
+  #prompt_segment black default "%(!.%{%F{yellow}%}.)hackbox"
+#}
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+POWERLEVEL9K_SHORTEN_FOLDER_MARKER='~shared'
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_with_folder_marker"
+
+setopt AUTO_CD
+
+dir2(){
+  local color='%F{blue}'
+  local fullpath=$(realpath `pwd`)
+  local path="$fullpath"
+  if [[ $fullpath = *"/media/sf_vboxshared"* ]]; then
+    local replace="/media/sf_vboxshared" 
+    path="${fullpath/$replace/%B\\uf121%b }"
+  elif [[ $fullpath = *"/home/enigmatrix"* ]]; then
+    local replace="/home/enigmatrix"
+    path="${fullpath/$replace/\\uf015 }"
+  fi
+  echo -n "$path"
+}
+
+POWERLEVEL9K_MODE='nerdfont-complete'
+POWERLEVEL9K_SHORTEN_STRATEGY='truncate_to_unique'
+POWERLEVEL9K_DIR_SHOW_WRITABLE=true
+POWERLEVEL9K_HOST_ICON="\uF109 "
+POWERLEVEL9K_SSH_ICON="\uF489 "
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(host custom_dir2 dir_writable)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vcs time)
+POWERLEVEL9K_CUSTOM_DIR2="dir2"
+POWERLEVEL9K_CUSTOM_DIR2_BACKGROUND="blue"
+POWERLEVEL9K_CUSTOM_DIR2_FOREGROUND="white"
