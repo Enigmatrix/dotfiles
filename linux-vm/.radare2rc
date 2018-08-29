@@ -1,0 +1,28 @@
+#stack
+e cmd.stack = true
+
+# Solarized theme
+eco solarized
+
+# dont truncate lines
+e scr.breaklines = true
+
+# use terminal's 256 colors
+e scr.color = 2
+
+# colorize grep
+e scr.color.grep = true
+
+# Use UTF-8 to show cool arrows that do not look like crap :)
+e scr.utf8 = true 
+e scr.utf8.curvy = true 
+
+# have lines coming out from current block too
+e asm.lines.out = true
+
+e asm.cmt.right = false
+e asm.hints = true
+e asm.payloads = true
+
+e asm.lines.ret = true
+e asm.var.subonly = true

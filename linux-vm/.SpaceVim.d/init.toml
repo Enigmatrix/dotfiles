@@ -11,11 +11,9 @@
     # set spacevim theme. by default colorscheme layer is not loaded,
     # if you want to use more colorscheme, please load the colorscheme
     # layer
-    # colorscheme = "NeoSolarized"
-    colorscheme = "gruvbox"
-    colorscheme_bg = "dark"
+    colorscheme = "NeoSolarized"
+    #colorscheme = "gruvbox"
     background = "dark"
-
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors
     enable_guicolors = true
@@ -37,12 +35,14 @@ auto-completion-tab-key-behavior = "smart"
 
 [[layers]]
 name = 'shell'
-default_position = 'bottom'
+default_position = 'top'
 default_height = 30
-default_shell='terminal'
 
 [[layers]]
 name='colorscheme'
+
+[[layers]]
+name='lang#python'
 
 [[layers]]
 name = 'VersionControl'
@@ -51,34 +51,4 @@ name = 'VersionControl'
 name = 'ctrlp'
 
 [[layers]]
-name='lang#python'
-
-[[layers]]
 name='lang#markdown'
-
-[[layers]]
-name="lang#c"
-
-[[layers]]
-name="lang#csharp"
-
-[[layers]]
-name="lang#html"
-
-[[layers]]
-name="lang#javascript"
-
-[[layers]]
-name="lang#markdown"
-
-[[layers]]
-name="lang#rust"
-
-[[plugins]]
-description = 'F# support for Vim'
-repository = 'fsharp/vim-fsharp'
-lazy = 1
-filetypes = 'fsharp'
-build_commands = ['curl', 'make', 'mozroots', 'touch', 'unzip']
-  [plugins.build]
-  unix = 'make fsautocomplete'
