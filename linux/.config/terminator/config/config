@@ -56,13 +56,13 @@
 [profiles]
   [[default]]
     allow_bold = False
-    background_color = "#2f2f36"
+    background_color = "#282828"
     background_darkness = 0.95
     copy_on_selection = True
     cursor_color = "#aaaaaa"
     font = FuraCode Nerd Font weight=450 10
     foreground_color = "#ebdbb2"
-    palette = "#282828:#cc241d:#98971a:#d79921:#3465a4:#b16286:#689d6a:#eeeeee:#555753:#fb4934:#b8bb26:#fabd2f:#204a87:#d3869b:#8ec07c:#ebdbb2"
+    palette = "#2f2f36:#cc241d:#98971a:#d79921:#3465a4:#b16286:#689d6a:#eeeeee:#555753:#fb4934:#b8bb26:#fabd2f:#204a87:#d3869b:#8ec07c:#ebdbb2"
     scroll_on_output = True
     scrollback_infinite = True
     scrollbar_position = hidden
