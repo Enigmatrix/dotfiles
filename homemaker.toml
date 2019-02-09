@@ -1,5 +1,10 @@
+[tasks.core]
+  links = [
+    [".gitconfig", "core/.gitconfig"]
+  ]
+
 [tasks.linux_core]
-  deps = ["coreinstall", "zsh", "python", "r2", "pwntools"]
+  deps = ["core", "coreinstall", "zsh", "python", "r2", "pwntools"]
   links = [
     [".config/terminator/config", "linux/core/.config/terminator/config"],
     [".SpaceVim.d/autoload/main.vim", "linux/core/.SpaceVim.d/autoload/main.vim"],
