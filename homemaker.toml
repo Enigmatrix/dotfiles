@@ -25,10 +25,10 @@
   prefix = ["sudo", "apt-get", "install", "-y"]
 
 [macros.pip]
-  prefix = ["pip", "install", "--user", "-y"]
+  prefix = ["pip", "install", "--user"]
 
 [macros.gem]
-  prefix = ["sudo", "gem", "install", "-y"]
+  prefix = ["sudo", "gem", "install"]
 
 [macros.shell]
   prefix = ["sh", "-c"]
@@ -38,6 +38,7 @@
   prefix = ["git", "clone"]
 
 [tasks.git]
+  rejects = [["which", "git"]]
   cmds = [
     ["@install", "git"]
   ]
@@ -46,19 +47,20 @@
   cmdspre = [
     ["@install", "terminator", "zsh", "curl", "git"],
     ["chsh", "-s", "/bin/zsh"],
-    ["@shell", "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"],
+    ["@shell", "'$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)'"],
     ["@clone", "https://github.com/zsh-users/zsh-completions", ".oh-my-zsh/custom/plugins/zsh-completions"],
     ["@clone", "https://github.com/zsh-users/zsh-syntax-highlighting", ".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"],
     ["@clone", "https://github.com/zsh-users/zsh-autosuggestions", ".oh-my-zsh/custom/plugins/zsh-autosuggestions"],
     ["@shell", "curl -sLf https://spacevim.org/install.sh | bash"],
     ["@shell", "curl -fsSL https://get.docker.com -o get-docker.sh | bash"],
-    ["sudo", "usermod", "-aG", "docker", "${USER}"],
   ]
   cmds = [
     ["@install", "build-essential", "libssl-dev", "libffi-dev"],
     ["@install", "vim", "make", "gcc", "cmake", "wget", "neofetch", "ruby-full", "neovim"],
     ["sudo", "dpkg", "--add-architecture", "i386"],
-    ["@install", "libc6:i386", "libncurses5:i386", "libstdc++6:i386", "multiarch-support"]
+    ["sudo", "apt", "update"],
+    ["@install", "multiarch-support"],
+    ["@install", "libc6:i386", "libncurses5:i386", "libstdc++6:i386"]
   ]
 
 [tasks.python]
