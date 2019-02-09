@@ -46,7 +46,7 @@
 [tasks.zsh]
   cmdspre = [
     ["@install", "zsh"],
-    ["chsh", "-s", "/bin/zsh"],
+    ["@shell", "chsh -s `which zsh`"],
     ["@shell", "curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | zsh"],
     ["@clone", "https://github.com/bhilburn/powerlevel9k.git", ".oh-my-zsh/custom/themes/powerlevel9k"],
     ["@clone", "https://github.com/zsh-users/zsh-completions.git", ".oh-my-zsh/custom/plugins/zsh-completions"],
@@ -60,7 +60,7 @@
 [tasks.coreinstall]
   cmdspre = [
     ["@shell", "curl -sLf https://spacevim.org/install.sh | bash"],
-    ["@shell", "curl -fsSL https://get.docker.com -o get-docker.sh | bash"],
+    ["@shell", "curl -fsSL https://get.docker.com | bash"],
   ]
   cmds = [
     ["@install", "build-essential", "libssl-dev", "libffi-dev"],
