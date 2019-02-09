@@ -69,6 +69,9 @@ name="lang#csharp"
 name="lang#html"
 
 [[layers]]
+name="lang#toml"
+
+[[layers]]
 name="lang#javascript"
 
 [[layers]]

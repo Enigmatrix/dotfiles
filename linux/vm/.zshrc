@@ -96,15 +96,11 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
+alias vim="nvim"
 alias conf-zsh="vim ~/.zshrc"
-alias conf-svim="vim ~/.SpaceVim.d/init.toml"
-alias conf-vim="vim ~/.SpaceVim/vimrc"
+alias conf-vim="vim ~/.SpaceVim.d/init.toml"
 alias clear="reset"
 alias xopen="xdg-open"
-alias ida="WINEPREFIX=~/.wine64 wine ~c/Program\ Files/IDA\ 7.0/ida.exe"
-alias ida64="WINEPREFIX=~/.wine64 wine ~c/Program\ Files/IDA\ 7.0/ida64.exe"
-alias win32="wine"
-alias win64="WINEPREFIX=~/.wine64 wine"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
