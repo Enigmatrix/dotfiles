@@ -100,6 +100,7 @@ alias conf-zsh="vim ~/.zshrc"
 alias conf-svim="vim ~/.SpaceVim.d/init.toml"
 alias conf-vim="vim ~/.SpaceVim/vimrc"
 alias clear="reset"
+alias xopen="xdg-open"
 alias ida="WINEPREFIX=~/.wine64 wine ~c/Program\ Files/IDA\ 7.0/ida.exe"
 alias ida64="WINEPREFIX=~/.wine64 wine ~c/Program\ Files/IDA\ 7.0/ida64.exe"
 alias win32="wine"
@@ -157,3 +158,5 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vcs time)
 POWERLEVEL9K_CUSTOM_DIR2="dir2"
 POWERLEVEL9K_CUSTOM_DIR2_BACKGROUND="blue"
 POWERLEVEL9K_CUSTOM_DIR2_FOREGROUND="white"
+
+export PATH=$PATH:/home/enigmatrix/.local/bin

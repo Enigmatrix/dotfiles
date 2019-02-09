@@ -27,6 +27,8 @@
     enable_tabline_filetype_icon = true
     enable_statusline_display_mode = true
     lint_on_save = 0
+    bootstrap_before = "main#before"
+    bootstrap_after = "main#after"
 
 #READUP ON EACH EXTENSION IF AND INSTALL DEPS IF YOU WANT TO USE THEM
 
@@ -76,16 +78,7 @@ name="lang#markdown"
 name="lang#rust"
 
 [[layers]]
-name="lang#vue"
+name="lang#typescript"
 
 [[layers]]
-name="lang#crystal"
-
-[[plugins]]
-description = 'F# support for Vim'
-repository = 'fsharp/vim-fsharp'
-lazy = 1
-filetypes = 'fsharp'
-build_commands = ['curl', 'make', 'mozroots', 'touch', 'unzip']
-  [plugins.build]
-  unix = 'make fsautocomplete'
+name="lang#vue"
