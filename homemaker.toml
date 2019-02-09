@@ -61,6 +61,7 @@
   cmdspre = [
     ["@shell", "curl -sLf https://spacevim.org/install.sh | bash"],
     ["@shell", "curl -fsSL https://get.docker.com | bash"],
+    ["git", "config", "credential.helper", "store"]
   ]
   cmds = [
     ["@install", "build-essential", "libssl-dev", "libffi-dev"],
