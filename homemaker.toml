@@ -4,7 +4,7 @@
   ]
 
 [tasks.linux_core]
-  deps = ["core", "coreinstall", "zsh", "python", "r2", "pwntools"]
+  deps = ["core", "coreinstall", "zsh", "python", "r2", "pwntools", "node"]
   links = [
     [".config/terminator/config", "linux/core/.config/terminator/config"],
     [".SpaceVim.d/autoload/main.vim", "linux/core/.SpaceVim.d/autoload/main.vim"],
@@ -31,6 +31,9 @@
 
 [macros.pip]
   prefix = ["pip", "install", "--user"]
+
+[macros.npm]
+  prefix = ["npm", "i", "-g"]
 
 [macros.gem]
   prefix = ["sudo", "gem", "install"]
@@ -74,7 +77,17 @@
     ["sudo", "dpkg", "--add-architecture", "i386"],
     ["sudo", "apt", "update"],
     ["@install", "multiarch-support"],
-    ["@install", "libc6:i386", "libncurses5:i386", "libstdc++6:i386"]
+    ["@install", "libc6:i386", "libncurses5:i386", "libstdc++6:i386"],
+  ]
+
+[tasks.node]
+  cmds = [
+    ["@shell", "curl -o- https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash"],
+  ]
+  cmdspost = [
+    ["source", ".zshrc"],
+    ["nvm", "install", "--lts"],
+    ["@npm", "live-server", "tldr"]
   ]
 
 [tasks.python]
