@@ -1,5 +1,5 @@
 [tasks.linux_core]
-  deps = ["coreinstall", "python", "r2", "pwntools"]
+  deps = ["coreinstall", "zsh", "python", "r2", "pwntools"]
   links = [
     [".config/terminator/config", "linux/core/.config/terminator/config"],
     [".SpaceVim.d/autoload/main.vim", "linux/core/.SpaceVim.d/autoload/main.vim"],
@@ -43,14 +43,19 @@
     ["@install", "git"]
   ]
 
-[tasks.coreinstall]
+[tasks.zsh]
   cmdspre = [
-    ["@install", "terminator", "zsh", "curl", "git"],
+    ["@install", "terminator", "zsh"],
     ["chsh", "-s", "/bin/zsh"],
     ["@shell", "curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | zsh"],
-    ["@clone", "https://github.com/zsh-users/zsh-completions", ".oh-my-zsh/custom/plugins/zsh-completions"],
-    ["@clone", "https://github.com/zsh-users/zsh-syntax-highlighting", ".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"],
-    ["@clone", "https://github.com/zsh-users/zsh-autosuggestions", ".oh-my-zsh/custom/plugins/zsh-autosuggestions"],
+    ["@clone", "https://github.com/bhilburn/powerlevel9k.git", ".oh-my-zsh/custom/themes/powerlevel9k"],
+    ["@clone", "https://github.com/zsh-users/zsh-completions.git", ".oh-my-zsh/custom/plugins/zsh-completions"],
+    ["@clone", "https://github.com/zsh-users/zsh-syntax-highlighting.git", ".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"],
+    ["@clone", "https://github.com/zsh-users/zsh-autosuggestions.git", ".oh-my-zsh/custom/plugins/zsh-autosuggestions"],
+  ]
+
+[tasks.coreinstall]
+  cmdspre = [
     ["@shell", "curl -sLf https://spacevim.org/install.sh | bash"],
     ["@shell", "curl -fsSL https://get.docker.com -o get-docker.sh | bash"],
   ]
@@ -72,7 +77,7 @@
 [tasks.r2]
   cmds = [
     ["@clone", "https://github.com/radare/radare2.git", ".radare2"],
-    ["${HM_DEST}/.radare2/sys/install.sh"]
+    [".radare2/sys/install.sh"]
   ]
 
 [tasks.pwntools]
