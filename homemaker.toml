@@ -30,9 +30,6 @@
 [macros.gem]
   prefix = ["sudo", "gem", "install", "-y"]
 
-[macros.install]
-  prefix = ["sudo", "apt-get", "install", "-y"]
-
 [macros.shell]
   prefix = ["sh", "-c"]
 
