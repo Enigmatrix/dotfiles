@@ -14,6 +14,7 @@
 
 [tasks.linux_vm]
   deps = ["linux_core"]
+  cmds_pre = [["@shell", "curl -sLf https://spacevim.org/install.sh | bash"]]
   links = [
     [".zshrc", "linux/vm/.zshrc"]
   ]
@@ -67,7 +68,7 @@
 
 [tasks.coreinstall]
   cmdspre = [
-    ["@shell", "curl -sLf https://spacevim.org/install.sh | bash"],
+    #["@shell", "curl -sLf https://spacevim.org/install.sh | bash"],
     ["@shell", "curl -fsSL https://get.docker.com | bash"],
     ["git", "config", "credential.helper", "store"]
   ]
