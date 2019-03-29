@@ -68,8 +68,7 @@
 
 [tasks.coreinstall]
   cmdspre = [
-    ["@shell", "curl -fsSL https://get.docker.com | bash"],
-    ["git", "config", "credential.helper", "store"]
+    ["@shell", "curl -fsSL https://get.docker.com | bash"]
   ]
   cmds = [
     ["@install", "build-essential", "libssl-dev", "libffi-dev"],
