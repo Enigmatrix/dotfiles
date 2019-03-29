@@ -54,13 +54,7 @@
 
 [tasks.zsh]
   cmdspre = [
-    ["@install", "zsh"],
-    #["@shell", "chsh -s `which zsh`"],
-    #["@shell", "curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | zsh"],
-    #["@clone", "https://github.com/bhilburn/powerlevel9k.git", ".oh-my-zsh/custom/themes/powerlevel9k"],
-    #["@clone", "https://github.com/zsh-users/zsh-completions.git", ".oh-my-zsh/custom/plugins/zsh-completions"],
-    #["@clone", "https://github.com/zsh-users/zsh-syntax-highlighting.git", ".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"],
-    #["@clone", "https://github.com/zsh-users/zsh-autosuggestions.git", ".oh-my-zsh/custom/plugins/zsh-autosuggestions"],
+    ["@install", "zsh"]
   ]
   cmdspost = [
     ["@install", "terminator"],
