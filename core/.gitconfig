@@ -1,3 +1,5 @@
 [user]
 	email = enigmatrix2000@gmail.com
 	name = Enigmatrix
+[credential]
+	helper = store

@@ -61,7 +61,7 @@
     background_type = transparent
     copy_on_selection = True
     cursor_color = "#aaaaaa"
-    font = FuraCode Nerd Font weight=450 10
+    font = FuraCode Nerd Font 10
     foreground_color = "#ebdbb2"
     palette = "#2f2f36:#cc241d:#4e9a06:#d79921:#3465a4:#b16286:#edd400:#eeeeee:#555753:#fb4934:#73d216:#fabd2f:#729fcf:#d3869b:#fce94f:#ebdbb2"
     scroll_on_output = True

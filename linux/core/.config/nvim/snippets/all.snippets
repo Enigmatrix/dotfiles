@@ -1,0 +1,57 @@
+snippet today "Date"
+`date +%F`
+endsnippet
+
+snippet box "Box"
+`!p snip.rv = '┌' + '─' * (len(t[1]) + 2) + '┐'`
+│ $1 │
+`!p snip.rv = '└' + '─' * (len(t[1]) + 2) + '┘'`
+$0
+endsnippet
+
+snippet ps "p.send"
+p.send($0)
+endsnippet
+
+snippet psl "p.sendline"
+p.sendline($0)
+endsnippet
+
+snippet psa "p.sendafter"
+p.sendafter($0, $1)
+endsnippet
+
+snippet psla "p.sendlineafter"
+p.sendlineafter($0, $1)
+endsnippet
+
+snippet pwnbegin "Begin pwn"
+from pwn import *
+
+if args.REMOTE:
+	p = remote("$1", $2)
+else:
+	p = process("$3", env={})
+
+$0
+
+p.interactive()
+
+endsnippet
+
+snippet pwnbeginlibc "Begin pwn with libc"
+from pwn import *
+
+libc_path = "$4"
+
+if args.REMOTE:
+	p = remote("$1", $2)
+else:
+	p = process("$3", env={'LD_PRELOAD': os.path.join(os.getcwd(), libc_path)})
+
+libc = ELF(libc_path)
+
+$0
+
+p.interactive()
+endsnippet

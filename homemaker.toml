@@ -54,7 +54,12 @@
 
 [tasks.zsh]
   cmdspre = [
-    ["@install", "zsh"]
+    ["@install", "zsh"],
+    ["@clone", "https://github.com/bhilburn/powerlevel9k.git", ".zsh/powerlevel9k"],
+    ["@clone", "https://github.com/zsh-users/zsh-completions.git", ".zsh/zsh-completions"],
+    ["@clone", "https://github.com/zsh-users/zsh-syntax-highlighting.git", ".zsh/zsh-syntax-highlighting"],
+    ["@clone", "https://github.com/zsh-users/zsh-autosuggestions.git", ".zsh/zsh-autosuggestions"],
+    ["@shell", "rm -f ~/.zcompdump; compinit"],
   ]
   cmdspost = [
     ["@install", "terminator"],
