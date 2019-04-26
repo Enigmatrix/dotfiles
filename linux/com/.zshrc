@@ -19,6 +19,11 @@ alias win64="WINEPREFIX=~/.wine64 wine"
 alias l="ls -lah"
 alias ls='ls --color=auto'
 
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt SHARE_HISTORY
+
 setopt AUTO_CD
 
 typeset -A icon
