@@ -1,3 +1,4 @@
+" vim-plug auto setup
 let plugpath = expand('<sfile>:p:h'). '/autoload/plug.vim'
 if !filereadable(plugpath)
     if executable('curl')
@@ -13,18 +14,21 @@ if !filereadable(plugpath)
     endif
 endif
 
+" ┌─────────┐
+" │ Plugins │
+" └─────────┘
 call plug#begin('~/.local/share/nvim/plugged')
 
-
 Plug 'morhetz/gruvbox'
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
 Plug 'sheerun/vim-polyglot'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips'
+Plug 'haya14busa/incsearch.vim'
+Plug 'mhinz/vim-startify'
 
-" Denite - Fuzzy finding, buffer management
 Plug 'Shougo/denite.nvim'
 
 Plug 'airblade/vim-gitgutter'
@@ -33,6 +37,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
+
+" ┌──────────┐
+" │ Settings │
+" └──────────┘
+
 
 " General
 
@@ -64,33 +73,24 @@ set wrap
 set linebreak
 set nolist
 
-"Key Mappings
-inoremap jk <Esc>
-vnoremap . :norm.<CR>
-let mapleader = "\<Space>"
-nnoremap w <C-w>
-
-"   ;         - Browser currently open buffers
-"   <leader>t - Browse list of files in current directory
-"   <leader>g - Search current directory for occurences of given term and
-"   close window if no results
-"   <leader>j - Search current directory for occurences of word under cursor
-nmap ; :Denite buffer -split=floating -winrow=1<CR>
-nmap <leader>t :Denite file/rec -split=floating -winrow=1<CR>
-nmap <leader>g :Denite grep:. -split=floating -winrow=1<CR>
-nnoremap <leader>j :<C-u>DeniteCursorWord grep:. -mode=normal<CR>
-
 " background
 set termguicolors
 set background=dark
 colorscheme gruvbox
+
+let g:incsearch#auto_nohlsearch = 1
+
+" edit .vimrc/init.vim
+augroup vimrc     " Source vim configuration upon save
+    autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded " . $MYVIMRC | redraw
+augroup END
 
 " air-line
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_extensions = ['branch', 'hunks', 'coc']
 let g:airline#extensions#default#layout = [['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
-let g:airline_skip_empty_sections = 1
+"let g:airline_skip_empty_sections = 1
 let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
 let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
 " Configure error/warning section to use coc.nvim
@@ -104,13 +104,18 @@ let g:airline_theme = 'gruvbox'
 " NERDTree
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI = 1
+let g:NERDTreeWinPos = 'rightbelow'
 let g:NERDTreeIgnore = ['^\.DS_Store$', '^tags$', '\.git$[[dir]]', '\.idea$[[dir]]', '\.sass-cache$']
 let g:NERDTreeStatusline = ''
-" === Nerdtree shorcuts === "
-"  <leader>n - Toggle NERDTree on/off
-nmap <leader>n :NERDTreeToggle<CR>
 " Automaticaly close nvim if NERDTree is only thing left open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Startify then NERDTree
+autocmd VimEnter *
+                \   if !argc()
+                \ |   Startify
+                \ |   NERDTree
+                \ |   wincmd w
+                \ | endif
 
 
 " COC
@@ -147,7 +152,7 @@ let g:DevIconsEnableFolderPatternMatching = 1
 let g:DevIconsEnableFolderExtensionPatternMatching = 1
 let WebDevIconsUnicodeDecorateFolderNodesExactMatches = 1
 
-try
+
 " === Denite setup ==="
 " Use ripgrep for searching current directory for files
 " By default, ripgrep will respect rules in .gitignore
@@ -155,7 +160,7 @@ try
 "   --glob:  Include or exclues files for searching that match the given glob
 "            (aka ignore .git files)
 "
-call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
+call denite#custom#var('file/rec', 'command', ['rg', '--hidden', '--files', '--glob', '!.git'])
 
 " Use ripgrep in place of "grep"
 call denite#custom#var('grep', 'command', ['rg'])
@@ -206,8 +211,28 @@ function! s:profile(opts) abort
 endfunction
 
 call s:profile(s:denite_options)
-catch
-  echo 'Denite not installed. It should work after running :PlugInstall'
-endtry
+
+" ┌──────────────┐
+" │ Key Mappings │
+" └──────────────┘
+
+inoremap jk <Esc>
+vnoremap . :norm.<CR>
+let mapleader = "\<Space>"
+nnoremap w <C-w>
+nmap <leader>h :sp<CR>
+nmap <leader>v :vsp<CR>
 nmap ; :Denite buffer -split=floating -winrow=1<CR>
-nnoremap <leader>g :<C-u>Denite grep:. -no-empty -mode=normal<CR>
+nmap <leader>t :Denite file/rec -split=floating -winrow=1<CR>
+nmap <leader>c :e $MYVIMRC<CR>
+nmap <leader>n :NERDTreeToggle<CR>
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+nmap <leader>p :<C-u>CocCommand prettier.formatFile<CR>

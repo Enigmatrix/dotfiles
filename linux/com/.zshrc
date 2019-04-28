@@ -7,17 +7,31 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# aliases
+
 alias vim="nvim"
 alias zsh-conf="vim ~/.zshrc"
 alias vim-conf="vim ~/.config/nvim/init.vim"
+
 alias clear="reset"
 alias xopen="xdg-open"
+
 alias ida="WINEPREFIX=~/.wine64 wine ~c/Program\ Files/IDA\ 7.0/ida.exe"
 alias ida64="WINEPREFIX=~/.wine64 wine ~c/Program\ Files/IDA\ 7.0/ida64.exe"
 alias win32="wine"
 alias win64="WINEPREFIX=~/.wine64 wine"
+
 alias l="ls -lah"
 alias ls='ls --color=auto'
+
+alias g="git"
+alias ga="git add ."
+alias gc="git commit -m "
+alias gp="git push"
+alias gs="git status"
+
+
+# continuiing on...
 
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
