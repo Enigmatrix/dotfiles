@@ -20,10 +20,14 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'morhetz/gruvbox'
+Plug 'tomasiser/vim-code-dark'
+Plug 'mg979/vim-studio-dark'
+"Plug 'mhartington/oceanic-next'
+"Plug 'joshdick/onedark.vim'
+"Plug 'ayu-theme/ayu-vim'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
 Plug 'sheerun/vim-polyglot'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips'
 Plug 'haya14busa/incsearch.vim'
@@ -51,10 +55,8 @@ set encoding=utf-8
 set tabstop=4
 set expandtab
 set autoindent
-set nocompatible
 set shiftwidth=4
 set scrolloff=3
-set showmode
 set showcmd
 set hidden
 set wildmenu
@@ -72,11 +74,32 @@ set hlsearch
 set wrap
 set linebreak
 set nolist
+set shortmess+=c
+
 
 " background
-set termguicolors
-set background=dark
-colorscheme gruvbox
+if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+"set background=dark
+set t_Co=256
+set t_ut=
+colorscheme vsdark
+
+" get rid of stupid tildes on blank line
+"hi! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg
+" start in insert mode for terminal
+autocmd BufEnter term://* startinsert
+augroup TerminalStuff
+  autocmd TermOpen * setlocal nonumber norelativenumber
+augroup END
 
 let g:incsearch#auto_nohlsearch = 1
 
@@ -87,19 +110,19 @@ augroup END
 
 " air-line
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_extensions = ['branch', 'hunks', 'coc']
+let g:airline_extensions = ['branch', 'hunks', 'coc', 'tabline']
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#default#layout = [['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
-"let g:airline_skip_empty_sections = 1
+let g:airline_skip_empty_sections = 1
 let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
 let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
 " Configure error/warning section to use coc.nvim
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-let g:airline#extensions#tabline#formatter = 'default'
 let g:airline_solarized_bg='dark'
 "let g:airline_theme = 'solarized'
-let g:airline_theme = 'gruvbox'
+let g:airline_theme = 'codedark'
 
 " NERDTree
 let g:NERDTreeShowHidden = 1
@@ -122,6 +145,19 @@ autocmd VimEnter *
 hi! link CocErrorSign WarningMsg
 hi! link CocWarningSign Number
 hi! link CocInfoSign Type
+let g:coc_global_extensions = ["coc-css",
+            \ "coc-docker",
+            \ "coc-eslint",
+            \ "coc-html",
+            \ "coc-java",
+            \ "coc-json",
+            \ "coc-prettier",
+            \ "coc-python",
+            \ "coc-snippets",
+            \ "coc-tslint",
+            \ "coc-tsserver",
+            \ "coc-ultisnips",
+            \ "coc-vetur"]
 
 " UltiSnip
 let g:UltiSnipsExpandTrigger = '<tab>'
@@ -170,30 +206,29 @@ let g:startify_custom_header = [
             \ '                           \$$$$$$                              ',
             \ ]
 
-" === Denite setup ==="
-" Use ripgrep for searching current directory for files
-" By default, ripgrep will respect rules in .gitignore
-"   --files: Print each file that would be searched (but don't search)
-"   --glob:  Include or exclues files for searching that match the given glob
-"            (aka ignore .git files)
-"
+" Denite
+
 call denite#custom#var('file/rec', 'command', ['rg', '--hidden', '--files', '--glob', '!.git'])
-
-" Use ripgrep in place of "grep"
+"
 call denite#custom#var('grep', 'command', ['rg'])
-
-" Custom options for ripgrep
-"   --vimgrep:  Show results with every match on it's own line
-"   --hidden:   Search hidden directories and files
-"   --heading:  Show the file name above clusters of matches from each file
-"   --S:        Search case insensitively if the pattern is all lowercase
-call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--heading', '-S'])
-
-" Recommended defaults for ripgrep via Denite docs
+call denite#custom#var('grep', 'default_opts', ['--smart-case', '--follow', '--hidden', '--vimgrep', '--heading'])
 call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 call denite#custom#var('grep', 'separator', ['--'])
 call denite#custom#var('grep', 'final_opts', [])
+
+call denite#custom#map(
+	      \ 'insert',
+	      \ '<Down>',
+	      \ '<denite:move_to_next_line>',
+	      \ 'noremap'
+	      \)
+call denite#custom#map(
+	      \ 'insert',
+	      \ '<Up>',
+	      \ '<denite:move_to_previous_line>',
+	      \ 'noremap'
+	      \)
 
 " Remove date from buffer list
 call denite#custom#var('buffer', 'date_format', '')
@@ -233,16 +268,20 @@ call s:profile(s:denite_options)
 " │ Key Mappings │
 " └──────────────┘
 
-inoremap jk <Esc>
-vnoremap . :norm.<CR>
 let mapleader = "\<Space>"
+inoremap jk <Esc>
+nmap qq :q!<CR>
+vnoremap . :norm.<CR>
 nnoremap w <C-w>
 nmap <leader>h :sp<CR>
 nmap <leader>v :vsp<CR>
-nmap ; :Denite buffer -split=floating -winrow=1<CR>
-nmap <leader>t :Denite file/rec -split=floating -winrow=1<CR>
+"nmap _ :DeniteProjectDir file/rec -split=floating -winrow=1<CR>
+"nmap <leader>g Denite grep:::!<CR>
+
+nmap _ :DeniteProjectDir -split=floating -winrow=1 file/rec grep:::!<CR>
 nmap <leader>c :e $MYVIMRC<CR>
 nmap <leader>n :NERDTreeToggle<CR>
+nmap <leader>t :sp<CR>:ter<CR>i<CR>
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
@@ -252,4 +291,31 @@ map *  <Plug>(incsearch-nohl-*)
 map #  <Plug>(incsearch-nohl-#)
 map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
-nmap <leader>p :<C-u>CocCommand prettier.formatFile<CR>
+" exit from insert mode
+tnoremap jk <C-\><C-n><CR>
+nmap <leader>la  <Plug>(coc-codeaction)
+nmap <leader>lf  <Plug>(coc-fix-current)
+nmap <leader>lp :call CocAction('format')<CR>
+nmap <leader>lr :<C-u>CocCommand python.execInTerminal<CR>
+vmap <leader>lm :<C-u>CocCommand python.refactorExtractMethod<CR>
+nmap <leader>le  :<C-u>CocList diagnostics<CR>
+inoremap <silent><expr> <C-Space> coc#refresh()
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <silent> <F2> <Plug>(coc-rename)
+" buffer switching
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
+nnoremap <C-X> :bdelete<CR>
+nnoremap <Leader>1 :1b<CR>
+nnoremap <Leader>2 :2b<CR>
+nnoremap <Leader>3 :3b<CR>
+nnoremap <Leader>4 :4b<CR>
+nnoremap <Leader>5 :5b<CR>
+nnoremap <Leader>6 :6b<CR>
+nnoremap <Leader>7 :7b<CR>
+nnoremap <Leader>8 :8b<CR>
+nnoremap <Leader>9 :9b<CR>
+nnoremap <Leader>0 :10b<CR>
