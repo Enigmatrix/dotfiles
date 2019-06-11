@@ -19,12 +19,8 @@ endif
 " └─────────┘
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'morhetz/gruvbox'
 Plug 'tomasiser/vim-code-dark'
 Plug 'mg979/vim-studio-dark'
-"Plug 'mhartington/oceanic-next'
-"Plug 'joshdick/onedark.vim'
-"Plug 'ayu-theme/ayu-vim'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
 Plug 'sheerun/vim-polyglot'
 Plug 'vim-airline/vim-airline'
@@ -38,6 +34,7 @@ Plug 'Shougo/denite.nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
+Plug 'junegunn/goyo.vim'
 Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
@@ -61,6 +58,7 @@ set showcmd
 set hidden
 set wildmenu
 set visualbell
+set splitbelow
 set ttyfast
 set ruler
 set backspace=indent,eol,start
@@ -94,7 +92,7 @@ set t_ut=
 colorscheme vsdark
 
 " get rid of stupid tildes on blank line
-"hi! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg
+hi! EndOfBuffer ctermbg=234 ctermfg=234 guibg=#1e1e1e guifg=#1e1e1e
 " start in insert mode for terminal
 autocmd BufEnter term://* startinsert
 augroup TerminalStuff
@@ -123,6 +121,8 @@ let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_
 let g:airline_solarized_bg='dark'
 "let g:airline_theme = 'solarized'
 let g:airline_theme = 'codedark'
+
+let g:Vsd.contrast = 2  " high
 
 " NERDTree
 let g:NERDTreeShowHidden = 1
@@ -157,6 +157,7 @@ let g:coc_global_extensions = ["coc-css",
             \ "coc-tslint",
             \ "coc-tsserver",
             \ "coc-ultisnips",
+            \ "coc-tailwindcss",
             \ "coc-vetur"]
 
 " UltiSnip
@@ -281,7 +282,7 @@ nmap <leader>v :vsp<CR>
 nmap _ :DeniteProjectDir -split=floating -winrow=1 file/rec grep:::!<CR>
 nmap <leader>c :e $MYVIMRC<CR>
 nmap <leader>n :NERDTreeToggle<CR>
-nmap <leader>t :sp<CR>:ter<CR>i<CR>
+nmap <leader>t :10sp<CR>:ter<CR>i<CR>
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
