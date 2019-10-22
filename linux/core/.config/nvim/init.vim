@@ -29,6 +29,9 @@ Plug 'SirVer/ultisnips'
 Plug 'haya14busa/incsearch.vim'
 Plug 'mhinz/vim-startify'
 
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'Shougo/denite.nvim'
 
 Plug 'airblade/vim-gitgutter'
@@ -36,6 +39,9 @@ Plug 'tpope/vim-fugitive'
 
 Plug 'junegunn/goyo.vim'
 Plug 'ryanoasis/vim-devicons'
+
+"Plug 'zefei/vim-wintabs'
+"Plug 'zefei/vim-wintabs-powerline'
 
 call plug#end()
 
@@ -94,10 +100,12 @@ colorscheme vsdark
 " get rid of stupid tildes on blank line
 hi! EndOfBuffer ctermbg=234 ctermfg=234 guibg=#1e1e1e guifg=#1e1e1e
 " start in insert mode for terminal
-autocmd BufEnter term://* startinsert
+
 augroup TerminalStuff
   autocmd TermOpen * setlocal nonumber norelativenumber
 augroup END
+" enable spell check in latex and markdown files
+autocmd FileType latex,tex,md,markdown setlocal spell
 
 let g:incsearch#auto_nohlsearch = 1
 
@@ -146,6 +154,7 @@ hi! link CocErrorSign WarningMsg
 hi! link CocWarningSign Number
 hi! link CocInfoSign Type
 let g:coc_global_extensions = ["coc-css",
+            \ "coc-rls",
             \ "coc-docker",
             \ "coc-eslint",
             \ "coc-html",
@@ -212,7 +221,7 @@ let g:startify_custom_header = [
 call denite#custom#var('file/rec', 'command', ['rg', '--hidden', '--files', '--glob', '!.git'])
 "
 call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_opts', ['--smart-case', '--follow', '--hidden', '--vimgrep', '--heading'])
+call denite#custom#var('grep', 'default_opts', ['--smart-case', '--follow', '--hidden', '--vimgrep', '--no-heading', '--color=never'])
 call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 call denite#custom#var('grep', 'separator', ['--'])
@@ -264,6 +273,10 @@ function! s:profile(opts) abort
 endfunction
 
 call s:profile(s:denite_options)
+
+
+let g:wintabs_ui_buffer_name_format = " %o %t "
+let g:wintabs_display = 'tabline'
 
 " ┌──────────────┐
 " │ Key Mappings │
