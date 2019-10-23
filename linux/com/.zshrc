@@ -1,4 +1,4 @@
-zmodload zsh/zprof
+# zmodload zsh/zprof
 
 source  ~/.zsh/powerlevel9k/powerlevel9k.zsh-theme
 source  ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -115,4 +115,4 @@ fi
 
 export COMPOSE_HTTP_TIMEOUT=600
 
-zprof
+# zprof

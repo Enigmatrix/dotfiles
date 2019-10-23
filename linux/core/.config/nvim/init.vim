@@ -21,17 +21,20 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'tomasiser/vim-code-dark'
 Plug 'mg979/vim-studio-dark'
+Plug 'iCyMind/NeoSolarized'
+
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
-Plug 'sheerun/vim-polyglot'
+"Plug 'sheerun/vim-polyglot'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips'
 Plug 'haya14busa/incsearch.vim'
 Plug 'mhinz/vim-startify'
 
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
+"Plug 'tpope/vim-unimpaired'
+"Plug 'tpope/vim-surround'
+"Plug 'tpope/vim-repeat'
 Plug 'Shougo/denite.nvim'
 
 Plug 'airblade/vim-gitgutter'
@@ -44,6 +47,7 @@ Plug 'ryanoasis/vim-devicons'
 "Plug 'zefei/vim-wintabs-powerline'
 
 call plug#end()
+set pyxversion=3
 
 " ┌──────────┐
 " │ Settings │
@@ -80,6 +84,7 @@ set linebreak
 set nolist
 set shortmess+=c
 
+let g:loaded_clipboard_provider = 1
 
 " background
 if (has("nvim"))
@@ -93,12 +98,13 @@ if (has("nvim"))
     set termguicolors
   endif
 "set background=dark
-set t_Co=256
+"set t_Co=256
 set t_ut=
 colorscheme vsdark
 
 " get rid of stupid tildes on blank line
 hi! EndOfBuffer ctermbg=234 ctermfg=234 guibg=#1e1e1e guifg=#1e1e1e
+"hi! EndOfBuffer ctermbg=bg ctermfg=bg
 " start in insert mode for terminal
 
 augroup TerminalStuff
