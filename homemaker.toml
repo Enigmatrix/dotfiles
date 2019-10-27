@@ -1,31 +1,73 @@
-[tasks.core]
+## Overarching Tasks
+
+[tasks.linux_ns]
+  deps = ["linux_common", "fish"]
   links = [
-    [".gitconfig", "core/.gitconfig"]
+    [".config/fish/", "linux/ns/.config/fish/"],
+    [".tmux.conf", "linux/ns/.tmux.conf"]
   ]
 
-[tasks.linux_core]
-  deps = ["core", "coreinstall", "zsh", "python", "r2", "pwntools"]
-  links = [
-    [".config/terminator/config", "linux/core/.config/terminator/config"],
-    [".SpaceVim.d/autoload/main.vim", "linux/core/.SpaceVim.d/autoload/main.vim"],
-    [".SpaceVim.d/init.toml", "linux/core/.SpaceVim.d/init.toml"],
-    [".radare2rc", "linux/core/.radare2rc"],
+[tasks.linux_common]
+  deps = ["common", "tmux", "neovim"]
+  cmds = [
+    ["@install", "binutils", "build-essential", "cmake", "make", "gcc"],
+    ["@install", "python", "python3", "python-dev", "python3-dev", "python-pip", "python3-pip"]
+    ["@install", "vim", "wget", "neofetch", "ruby-full"],
   ]
 
-[tasks.linux_vm]
-  deps = ["linux_core"]
-  cmds_pre = [["@shell", "curl -sLf https://spacevim.org/install.sh | bash"]]
+## Individual Tasks
+
+[tasks.common]
   links = [
-    [".zshrc", "linux/vm/.zshrc"]
+    [".gitignore", "common/.gitignore"]
   ]
 
-[tasks.linux_com]
-  deps = ["linux_core"]
-  links = [
-    [".zshrc", "linux/com/.zshrc"]
+[tasks.fish]
+  cmds = [
+    ["@install", "fish"],
   ]
 
-#install stuff
+[tasks.tmux]
+  cmds = [
+    ["@install", "tmux"],
+  ]
+
+[tasks.neovim]
+  cmds = [
+    ["curl", "-LO", "https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"],
+    ["chmod", "u+x", "nvim.appimage"],
+    ["mv", "./nvim.appimage", "/usr/bin/nvim"]
+  ]
+
+[tasks.r2]
+  cmds = [
+    ["@clone", "https://github.com/radare/radare2.git", ".radare2"],
+    [".radare2/sys/install.sh"]
+  ]
+
+[tasks.pwntools]
+  cmds = [
+    ["sudo", "dpkg", "--add-architecture", "i386"],
+    ["sudo", "apt", "update"],
+    ["@install", "multiarch-support"],
+    ["@install", "libc6:i386", "libncurses5:i386", "libstdc++6:i386"],
+
+    ["@gem", "one_gadget", "seccomp-tools"],
+    ["@pip", "capstone", "pwntools"],
+    ["@install", "libc6-dbg", "gdb", "valgrind"]
+  ]
+
+[tasks.node]
+  cmds = [
+    ["@shell", "curl -o- https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash"],
+  ]
+  cmdspost = [
+    ["nvm", "install", "--lts"],
+    ["@npm", "live-server", "tldr"]
+  ]
+
+
+## Macros
 
 [macros.install]
   prefix = ["sudo", "apt-get", "install", "-y"]
@@ -50,59 +92,4 @@
   rejects = [["which", "git"]]
   cmds = [
     ["@install", "git"]
-  ]
-
-[tasks.zsh]
-  cmdspre = [
-    ["@install", "zsh"],
-    ["@clone", "https://github.com/bhilburn/powerlevel9k.git", ".zsh/powerlevel9k"],
-    ["@clone", "https://github.com/zsh-users/zsh-completions.git", ".zsh/zsh-completions"],
-    ["@clone", "https://github.com/zsh-users/zsh-syntax-highlighting.git", ".zsh/zsh-syntax-highlighting"],
-    ["@clone", "https://github.com/zsh-users/zsh-autosuggestions.git", ".zsh/zsh-autosuggestions"],
-    ["@shell", "rm -f ~/.zcompdump; compinit"],
-  ]
-  cmdspost = [
-    ["@install", "terminator"],
-  ]
-
-[tasks.coreinstall]
-  cmdspre = [
-    ["@shell", "curl -fsSL https://get.docker.com | bash"]
-  ]
-  cmds = [
-    ["@install", "build-essential", "libssl-dev", "libffi-dev"],
-    ["@install", "vim", "make", "gcc", "cmake", "wget", "neofetch", "ruby-full", "neovim"],
-    ["sudo", "dpkg", "--add-architecture", "i386"],
-    ["sudo", "apt", "update"],
-    ["@install", "multiarch-support"],
-    ["@install", "libc6:i386", "libncurses5:i386", "libstdc++6:i386"],
-  ]
-
-[tasks.node]
-  cmds = [
-    ["@shell", "curl -o- https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash"],
-  ]
-  cmdspost = [
-    ["source", ".zshrc"],
-    ["nvm", "install", "--lts"],
-    ["@npm", "live-server", "tldr"]
-  ]
-
-[tasks.python]
-  cmds = [
-    ["@install", "python", "python-dev", "python-pip"],
-    ["@install", "python3", "python3-dev", "python3-pip"],
-  ]
-
-[tasks.r2]
-  cmds = [
-    ["@clone", "https://github.com/radare/radare2.git", ".radare2"],
-    [".radare2/sys/install.sh"]
-  ]
-
-[tasks.pwntools]
-  cmds = [
-    ["@gem", "one_gadget", "seccomp-tools"],
-    ["@pip", "capstone", "pwntools"],
-    ["@install", "libc6-dbg", "gdb", "valgrind"]
   ]
