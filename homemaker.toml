@@ -19,7 +19,7 @@
 
 [tasks.common]
   links = [
-    [".gitignore", "common/.gitignore"]
+    [".gitconfig", "common/.gitconfig"]
   ]
 
 [tasks.fish]
