@@ -1,5 +1,4 @@
 {
-  "suggest.maxCompleteItemCount": 20,
   "eslint.filetypes": [
     "javascript",
     "typescript",

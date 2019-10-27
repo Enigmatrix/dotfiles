@@ -19,8 +19,11 @@ endif
 " └─────────┘
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'tomasiser/vim-code-dark'
-Plug 'mg979/vim-studio-dark'
+Plug 'gilsondev/searchtasks.vim'
+
+"Plug 'tomasiser/vim-code-dark'
+"Plug 'mg979/vim-studio-dark'
+Plug 'aswathkk/darkscene.vim'
 Plug 'iCyMind/NeoSolarized'
 
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
@@ -59,10 +62,10 @@ set pyxversion=3
 filetype plugin indent on
 syntax on
 set encoding=utf-8
-set tabstop=4
+set tabstop=2
 set expandtab
 set autoindent
-set shiftwidth=4
+set shiftwidth=2
 set scrolloff=3
 set showcmd
 set hidden
@@ -100,10 +103,13 @@ if (has("nvim"))
 "set background=dark
 "set t_Co=256
 set t_ut=
-colorscheme vsdark
+colorscheme darkscene
+
+au ColorScheme * hi Normal ctermbg=none guibg=none
+au ColorScheme * hi NonText ctermbg=none guibg=none
 
 " get rid of stupid tildes on blank line
-hi! EndOfBuffer ctermbg=234 ctermfg=234 guibg=#1e1e1e guifg=#1e1e1e
+"hi! EndOfBuffer ctermbg=234 ctermfg=234 guibg=#1e1e1e guifg=#1e1e1e
 "hi! EndOfBuffer ctermbg=bg ctermfg=bg
 " start in insert mode for terminal
 
@@ -124,7 +130,8 @@ augroup END
 let g:airline_powerline_fonts = 1
 let g:airline_extensions = ['branch', 'hunks', 'coc', 'tabline']
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#buffer_nr_show = 0
 let g:airline#extensions#default#layout = [['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
 let g:airline_skip_empty_sections = 1
 let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
@@ -132,11 +139,27 @@ let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
 " Configure error/warning section to use coc.nvim
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+
+let g:airline#extensions#tabline#buffer_idx_format = {
+      \ '0': '0 ',
+      \ '1': '1 ',
+      \ '2': '2 ',
+      \ '3': '3 ',
+      \ '4': '4 ',
+      \ '5': '5 ',
+      \ '6': '6 ',
+      \ '7': '7 ',
+      \ '8': '8 ',
+      \ '9': '9 '
+      \}
+
 let g:airline_solarized_bg='dark'
 "let g:airline_theme = 'solarized'
-let g:airline_theme = 'codedark'
+"let g:airline_theme = 'codedark'
+let g:airline_theme = 'darkscene'
 
-let g:Vsd.contrast = 2  " high
+
+"let g:Vsd.contrast = 2  " high
 
 " NERDTree
 let g:NERDTreeShowHidden = 1
@@ -298,7 +321,8 @@ nmap <leader>v :vsp<CR>
 "nmap _ :DeniteProjectDir file/rec -split=floating -winrow=1<CR>
 "nmap <leader>g Denite grep:::!<CR>
 
-nmap _ :DeniteProjectDir -split=floating -winrow=1 file/rec grep:::!<CR>
+"nmap _ :DeniteProjectDir -split=floating -winrow=1 file/rec grep:::!<CR>
+nmap _ :DeniteProjectDir -split=floating -winrow=1 file/rec<CR>
 nmap <leader>c :e $MYVIMRC<CR>
 nmap <leader>n :NERDTreeToggle<CR>
 nmap <leader>t :10sp<CR>:ter<CR>i<CR>
@@ -326,16 +350,15 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <silent> <F2> <Plug>(coc-rename)
 " buffer switching
-nnoremap <Tab> :bnext<CR>
-nnoremap <S-Tab> :bprevious<CR>
+nmap <Tab> <Plug>AirlineSelectPrevTab
+nmap <S-Tab> <Plug>AirlineSelectNextTab
 nnoremap <C-X> :bdelete<CR>
-nnoremap <Leader>1 :1b<CR>
-nnoremap <Leader>2 :2b<CR>
-nnoremap <Leader>3 :3b<CR>
-nnoremap <Leader>4 :4b<CR>
-nnoremap <Leader>5 :5b<CR>
-nnoremap <Leader>6 :6b<CR>
-nnoremap <Leader>7 :7b<CR>
-nnoremap <Leader>8 :8b<CR>
-nnoremap <Leader>9 :9b<CR>
-nnoremap <Leader>0 :10b<CR>
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
