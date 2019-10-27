@@ -20,6 +20,8 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'gilsondev/searchtasks.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 "Plug 'tomasiser/vim-code-dark'
 "Plug 'mg979/vim-studio-dark'
@@ -38,7 +40,6 @@ Plug 'mhinz/vim-startify'
 "Plug 'tpope/vim-unimpaired'
 "Plug 'tpope/vim-surround'
 "Plug 'tpope/vim-repeat'
-Plug 'Shougo/denite.nvim'
 
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
@@ -245,63 +246,45 @@ let g:startify_custom_header = [
             \ '                           \$$$$$$                              ',
             \ ]
 
-" Denite
+" fzf
+let $FZF_DEFAULT_OPTS = '--layout=reverse'
 
-call denite#custom#var('file/rec', 'command', ['rg', '--hidden', '--files', '--glob', '!.git'])
-"
-call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_opts', ['--smart-case', '--follow', '--hidden', '--vimgrep', '--no-heading', '--color=never'])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
+"Open FZF and choose floating window
+let g:fzf_layout = { 'window': 'call OpenFloatingWin()' }
 
-call denite#custom#map(
-	      \ 'insert',
-	      \ '<Down>',
-	      \ '<denite:move_to_next_line>',
-	      \ 'noremap'
-	      \)
-call denite#custom#map(
-	      \ 'insert',
-	      \ '<Up>',
-	      \ '<denite:move_to_previous_line>',
-	      \ 'noremap'
-	      \)
+function! OpenFloatingWin()
 
-" Remove date from buffer list
-call denite#custom#var('buffer', 'date_format', '')
+  " 90% of the height
+  let height = float2nr(&lines * 0.7)
+  " 60% of the height
+  let width = float2nr(&columns * 0.5)
+  " horizontal position (centralized)
+  let horizontal = float2nr((&columns - width) / 2)
 
-" Custom options for Denite
-"   auto_resize             - Auto resize the Denite window height automatically.
-"   prompt                  - Customize denite prompt
-"   direction               - Specify Denite window direction as directly below current pane
-"   winminheight            - Specify min height for Denite window
-"   highlight_mode_insert   - Specify h1-CursorLine in insert mode
-"   prompt_highlight        - Specify color of prompt
-"   highlight_matched_char  - Matched characters highlight
-"   highlight_matched_range - matched range highlight
-let s:denite_options = {'default' : {
-\ 'auto_resize': 1,
-\ 'direction': 'rightbelow',
-\ 'winminheight': '10',
-\ 'highlight_mode_insert': 'Visual',
-\ 'highlight_mode_normal': 'Visual',
-\ 'prompt_highlight': 'Function',
-\ 'highlight_matched_char': 'Function',
-\ 'highlight_matched_range': 'Normal'
-\ }}
+  "Set the position, size, etc. of the floating window.
+  "The size configuration here may not be so flexible, and there's room for further improvement.
+  let opts = {
+        \ 'relative': 'editor',
+        \ 'row': 1,
+        \ 'col': horizontal,
+        \ 'width': width,
+        \ 'height': height
+        \ }
 
-" Loop through denite options and enable them
-function! s:profile(opts) abort
-  for l:fname in keys(a:opts)
-    for l:dopt in keys(a:opts[l:fname])
-      call denite#custom#option(l:fname, l:dopt, a:opts[l:fname][l:dopt])
-    endfor
-  endfor
+  let buf = nvim_create_buf(v:false, v:true)
+  let win = nvim_open_win(buf, v:true, opts)
+
+  "Set Floating Window Highlighting
+  call setwinvar(win, '&winhl', 'Normal:Pmenu')
+
+  setlocal
+        \ buftype=nofile
+        \ nobuflisted
+        \ bufhidden=hide
+        \ nonumber
+        \ norelativenumber
+        \ signcolumn=no
 endfunction
-
-call s:profile(s:denite_options)
 
 
 let g:wintabs_ui_buffer_name_format = " %o %t "
@@ -321,8 +304,9 @@ nmap <leader>v :vsp<CR>
 "nmap _ :DeniteProjectDir file/rec -split=floating -winrow=1<CR>
 "nmap <leader>g Denite grep:::!<CR>
 
-"nmap _ :DeniteProjectDir -split=floating -winrow=1 file/rec grep:::!<CR>
-nmap _ :DeniteProjectDir -split=floating -winrow=1 file/rec<CR>
+nmap _ :Rg<CR>
+nmap <leader>f :Files<CR>
+
 nmap <leader>c :e $MYVIMRC<CR>
 nmap <leader>n :NERDTreeToggle<CR>
 nmap <leader>t :10sp<CR>:ter<CR>i<CR>
