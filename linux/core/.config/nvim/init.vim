@@ -259,23 +259,35 @@ function! OpenFloatingWin()
   " 60% of the height
   let width = float2nr(&columns * 0.5)
   " horizontal position (centralized)
-  let horizontal = float2nr((&columns - width) / 2)
+  let left = float2nr((&columns - width) / 2)
+  let top = float2nr((&lines - height) / 2)
 
   "Set the position, size, etc. of the floating window.
   "The size configuration here may not be so flexible, and there's room for further improvement.
   let opts = {
         \ 'relative': 'editor',
-        \ 'row': 1,
-        \ 'col': horizontal,
+        \ 'row': top,
+        \ 'col': left,
         \ 'width': width,
-        \ 'height': height
+        \ 'height': height,
+        \ 'style': 'minimal'
         \ }
 
-  let buf = nvim_create_buf(v:false, v:true)
-  let win = nvim_open_win(buf, v:true, opts)
+  let top = "╭" . repeat("─", width - 2) . "╮"
+  let mid = "│" . repeat(" ", width - 2) . "│"
+  let bot = "╰" . repeat("─", width - 2) . "╯"
+  let lines = [top] + repeat([mid], height - 2) + [bot]
 
-  "Set Floating Window Highlighting
-  call setwinvar(win, '&winhl', 'Normal:Pmenu')
+  let s:buf = nvim_create_buf(v:false, v:true)
+  call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
+  call nvim_open_win(s:buf, v:true, opts)
+  set winhl=Normal:Normal
+  let opts.row += 1
+  let opts.height -= 2
+  let opts.col += 2
+  let opts.width -= 4
+  call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+  au BufWipeout <buffer> exe 'bw '.s:buf
 
   setlocal
         \ buftype=nofile
