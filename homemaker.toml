@@ -15,7 +15,7 @@
   deps = ["common", "tmux", "neovim"]
   cmds = [
     ["@install", "binutils", "build-essential", "cmake", "make", "gcc"],
-    ["@install", "python", "python3", "python-dev", "python3-dev", "python-pip", "python3-pip"]
+    ["@install", "python", "python3", "python-dev", "python3-dev", "python-pip", "python3-pip"],
     ["@install", "vim", "wget", "neofetch", "ruby-full"],
   ]
 
@@ -23,7 +23,7 @@
 
 [tasks.common]
   links = [
-    [".gitignore", "common/.gitignore"]
+    [".gitconfig", "common/.gitconfig"]
   ]
 
 [tasks.fish]
