@@ -137,7 +137,6 @@ set laststatus=1        " Always show a status line
 
 colorscheme NeoSolarized
 
-
 " COC
 hi! link CocErrorSign WarningMsg
 hi! link CocWarningSign Number
@@ -161,6 +160,9 @@ let $FZF_DEFAULT_OPTS = '--layout=reverse'
 let g:buftabline_show = 1
 let g:buftabline_numbers = 2
 let g:buftabline_indicators = 1
+
+" NeoSolarized gitgutter
+let g:gitgutter_override_sign_column_highlight = 0
 
 " Key Mappings
 let mapleader = "\<Space>"
