@@ -79,7 +79,7 @@
 		["@install", "fuse", "module-init-tools"],
 		["sudo", "modprobe", "fuse"],
 		["sudo", "groupadd", "fuse"],
-		["@shell", "sudo useradd -a -G fuse $(whoami)"],
+		["@shell", "sudo useradd -a -G fuse `whoami`"],
 	]
 
 
