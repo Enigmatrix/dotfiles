@@ -37,6 +37,7 @@
   ]
 
 [tasks.neovim]
+	deps = ["appimage"]
   cmds = [
     ["curl", "-LO", "https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"],
     ["chmod", "u+x", "nvim.appimage"],
@@ -72,6 +73,14 @@
     ["nvm", "install", "--lts"],
     ["@npm", "live-server", "tldr"]
   ]
+
+[tasks.appimage]
+  cmds = [
+		["@install", "fuse"],
+		["sudo", "modprobe", "fuse"],
+		["sudo", "groupadd", "fuse"],
+		["@shell", "sudo useradd -a -G fuse $(whoami)"],
+	]
 
 
 ## Macros
