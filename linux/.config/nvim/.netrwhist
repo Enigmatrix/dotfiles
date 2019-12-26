@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =3
+let g:netrw_dirhist_3='/home/enigmatrix/.config/fish/completions'
+let g:netrw_dirhist_2='/home/enigmatrix/.config/nvim'
+let g:netrw_dirhist_1='/home/enigmatrix/.config'

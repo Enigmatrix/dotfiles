@@ -1,0 +1,1 @@
+/home/enigmatrix/.fzf/shell/key-bindings.fish
