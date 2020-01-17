@@ -3,11 +3,15 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-"Plug 'iCyMind/NeoSolarized'
-"Plug 'aswathkk/darkscene.vim'
-"Plug 'joshdick/onedark.vim'
-"Plug 'tyrannicaltoucan/vim-quantum'
+Plug 'iCyMind/NeoSolarized'
+Plug 'aswathkk/darkscene.vim'
+Plug 'joshdick/onedark.vim'
+Plug 'tyrannicaltoucan/vim-quantum'
 Plug 'rakr/vim-one'
+Plug 'ayu-theme/ayu-vim'
+Plug 'ajmwagar/vim-deus'
+Plug 'morhetz/gruvbox'
+Plug 'liuchengxu/space-vim-dark'
 
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
 Plug 'sheerun/vim-polyglot'
@@ -178,7 +182,8 @@ endif
 let g:quantum_black=1
 let g:quantum_italics=1
 colorscheme one
-hi! Normal guibg=none
+"hi! Normal guibg=none
+hi! Comment cterm=italic
 set fcs=eob:\ 
 
 
