@@ -1,5 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR --export ANDROID_HOME:/home/enigmatrix/Android/Sdk/
 SETUVAR EDITOR:nvim
 SETUVAR --export GHIDRA_INSTALL_DIR:/home/enigmatrix/\x2erepos/ghidra_9\x2e1_PUBLIC
 SETUVAR __fish_init_2_3_0:\x1d
@@ -33,4 +34,4 @@ SETUVAR fish_pager_color_completion:\x1d
 SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:white\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
-SETUVAR fish_user_paths:/home/enigmatrix/\x2econfig/nvm/13\x2e5\x2e0/bin\x1e/opt/gradle/gradle\x2d6\x2e0\x2e1/bin\x1e/home/enigmatrix/\x2erepos/cling_2019\x2d11\x2d26_ubuntu18/bin/\x1e/home/enigmatrix/\x2egem/ruby/2\x2e5\x2e0/bin\x1e/home/enigmatrix/\x2elocal/bin\x1e/home/enigmatrix/\x2econfig/nvm/13\x2e0\x2e1/bin\x1e/home/enigmatrix/\x2econfig/yarn/global/node_modules/\x2ebin/\x1e/home/enigmatrix/\x2eyarn/bin\x1e/home/enigmatrix/\x2efzf/bin\x1e/home/enigmatrix/\x2erepos/fzf/bin\x1e/home/enigmatrix/External/fzf/bin
+SETUVAR --export fish_user_paths:/home/enigmatrix/\x2elocal/bin/

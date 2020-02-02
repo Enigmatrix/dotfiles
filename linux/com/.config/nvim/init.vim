@@ -1,30 +1,23 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'rakr/vim-one'
+"Plug 'morhetz/gruvbox'
+"Plug 'arcticicestudio/nord-vim'
+Plug 'bluz71/vim-nightfly-guicolors'
+
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-
-Plug 'iCyMind/NeoSolarized'
-Plug 'aswathkk/darkscene.vim'
-Plug 'joshdick/onedark.vim'
-Plug 'tyrannicaltoucan/vim-quantum'
-Plug 'rakr/vim-one'
-Plug 'ayu-theme/ayu-vim'
-Plug 'ajmwagar/vim-deus'
-Plug 'morhetz/gruvbox'
-Plug 'liuchengxu/space-vim-dark'
 
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install() }}
 Plug 'sheerun/vim-polyglot'
 Plug 'vim-airline/vim-airline'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips'
-Plug 'haya14busa/incsearch.vim'
 Plug 'mhinz/vim-startify'
 
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
-Plug 'junegunn/goyo.vim'
 Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
@@ -32,20 +25,40 @@ call plug#end()
 " Neo/vim Settings
 " ===
 
-" General {{{
-set mouse=nv                 " Disable mouse in command-line mode
-set modeline                 " automatically setting options from modelines
-set report=0                 " Don't report on line changes
-set errorbells               " Trigger bell on error
-set visualbell               " Use visual bell instead of beeping
-set signcolumn=yes           " Always show signs column
-set hidden                   " hide buffers when abandoned instead of unload
-set fileformats=unix,dos,mac " Use Unix as the standard file type
-set magic                    " For regular expressions turn magic on
-set path=.,**                " Directories to search when using gf
-set virtualedit=block        " Position cursor anywhere in visual block
-set formatoptions+=1         " Don't break lines after a one-letter word
-set formatoptions-=t         " Don't auto-wrap text
+set number " set number
+set noshowmode " dont show the mode under the lightline
+
+
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+"let g:gruvbox_contrast_dark='hard'
+"let g:gruvbox_italic=1
+"colorscheme gruvbox
+
 
 if has('vim_starting')
 	set encoding=utf-8
@@ -60,22 +73,6 @@ endif
 if has('clipboard')
 	set clipboard& clipboard+=unnamedplus
 endif
-
-" }}}
-" Wildmenu {{{
-" --------
-if has('wildmenu')
-	set nowildmenu
-	set wildmode=list:longest,full
-	set wildoptions=tagfile
-	set wildignorecase
-	set wildignore+=.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*
-	set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store
-	set wildignore+=**/node_modules/**,**/bower_modules/**,*/.sass-cache/*
-	set wildignore+=application/vendor/**,**/vendor/ckeditor/**,media/vendor/**
-	set wildignore+=__pycache__,*.egg-info,.pytest_cache
-endif
-
 
 " }}}
 " Tabs and Indents {{{
@@ -115,78 +112,14 @@ set showfulltag     " Show tag and tidy search in completion
 if exists('+inccommand')
 	set inccommand=nosplit
 endif
-
-" }}}
-" Behavior {{{
-" --------
-set nowrap                      " No wrap by default
-set linebreak                   " Break long lines at 'breakat'
-set breakat=\ \	;:,!?           " Long lines break chars
-set nostartofline               " Cursor in same column for few commands
-set whichwrap+=h,l,<,>,[,],~    " Move to following line on certain keys
-set splitbelow splitright       " Splits open bottom right
-set switchbuf=useopen,usetab    " Jump to the first open window in any tab
-set switchbuf+=vsplit           " Switch buffer behavior to vsplit
-set backspace=indent,eol,start  " Intuitive backspacing in insert mode
-set diffopt=filler,iwhite       " Diff mode: show fillers, ignore whitespace
-set completeopt=menuone         " Always show menu, even for one item
-set completeopt+=noselect       " Do not select a match in the menu
-
-" }}}
-" Editor UI {{{
-" --------------------
-set noshowmode          " Don't show mode in cmd window
-set shortmess=aoOTI     " Shorten messages and don't show intro
-set scrolloff=2         " Keep at least 2 lines above/below
-set sidescrolloff=5     " Keep at least 5 lines left/right
-set number              " Show line numbers
-set noruler             " Disable default status ruler
-set list                " Show hidden characters
-
-set showcmd             " Show command in status line
-set cmdheight=1         " Height of the command line
-set cmdwinheight=5      " Command-line lines
-set equalalways         " Resize windows on split or close
-set laststatus=2        " Always show a status line
-set display=lastline
-
-if has('folding')
-	set foldenable
-	set foldmethod=marker
-	set foldlevelstart=99
-endif
-
-" UI Symbols
-" icons:  ▏│ ¦ ╎ ┆ ⋮ ⦙ ┊ 
-set showbreak=↪
-set listchars=tab:\▏\ ,extends:⟫,precedes:⟪,nbsp:␣,trail:·
-"set fillchars=vert:▉,fold:─
-
-if has('conceal') && v:version >= 703
-	" For snippet_complete marker
-	set conceallevel=2 concealcursor=niv
-endif
-
-if exists('&pumblend')
-	" pseudo-transparency for completion menu
-	set pumblend=20
-endif
-
-if exists('&winblend')
-	" pseudo-transparency for floating window
-	set winblend=20
-endif
-
 " }}}
 
 let g:quantum_black=1
 let g:quantum_italics=1
-colorscheme one
-"hi! Normal guibg=none
+
 hi! Comment cterm=italic
+colorscheme nightfly
 set fcs=eob:\ 
-
-
 
 " air-line
 let g:airline_powerline_fonts = 1
@@ -215,19 +148,14 @@ let g:airline#extensions#tabline#buffer_idx_format = {
       \ '9': '9 '
       \}
 
-let g:airline_solarized_bg='dark'
-"let g:airline_theme = 'solarized'
-"let g:airline_theme = 'codedark'
-"let g:airline_theme = 'quantum'
-let g:airline_theme = 'one'
-
-
+" let g:airline_theme = 'nord'
 " NERDTree
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeWinPos = 'rightbelow'
 let g:NERDTreeIgnore = ['^\.DS_Store$', '^tags$', '\.git$[[dir]]', '\.idea$[[dir]]', '\.sass-cache$']
 let g:NERDTreeStatusline = ''
+
 " Automaticaly close nvim if NERDTree is only thing left open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " Startify then NERDTree
@@ -251,6 +179,7 @@ let g:coc_global_extensions = ["coc-css",
             \ "coc-java",
             \ "coc-json",
             \ "coc-prettier",
+            \ "coc-highlight",
             \ "coc-python",
             \ "coc-snippets",
             \ "coc-tslint",
@@ -388,15 +317,7 @@ nmap <leader>m :Maps<CR>
 nmap <leader>c :e $MYVIMRC<CR>
 nmap <leader>n :NERDTreeToggle<CR>
 nmap <leader>t :10sp<CR>:ter<CR>i<CR>
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
+
 " exit from insert mode
 tnoremap jk <C-\><C-n><CR>
 nmap <leader>la  <Plug>(coc-codeaction)
@@ -424,5 +345,10 @@ nmap <leader>6 <Plug>AirlineSelectTab6
 nmap <leader>7 <Plug>AirlineSelectTab7
 nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
+
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
 
 " vim: set foldmethod=marker ts=2 sw=2 tw=80 noet :
