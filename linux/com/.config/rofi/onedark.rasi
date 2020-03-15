@@ -15,9 +15,8 @@
 }
 
 #listview {
-    spacing: 4;
     scrollbar: false;
-    margin: 4;
+    margin: 0;
     dynamic: true;
 
 }
@@ -46,7 +45,7 @@
 #element.selected.normal {
     background-color: @selectioncolor;
     text-color: @foregroundcolorinverse;
-    border-radius: 6px;
+    border-radius: 4px;
 
     border: 0 0 0 0;
     border-color: @separatorcolor;

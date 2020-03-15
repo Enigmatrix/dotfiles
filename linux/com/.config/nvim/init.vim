@@ -4,6 +4,7 @@ Plug 'rakr/vim-one'
 "Plug 'morhetz/gruvbox'
 "Plug 'arcticicestudio/nord-vim'
 Plug 'bluz71/vim-nightfly-guicolors'
+Plug  'arzg/vim-colors-xcode'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -118,7 +119,7 @@ let g:quantum_black=1
 let g:quantum_italics=1
 
 hi! Comment cterm=italic
-colorscheme nightfly
+colorscheme xcodedarkhc
 set fcs=eob:\ 
 
 " air-line
